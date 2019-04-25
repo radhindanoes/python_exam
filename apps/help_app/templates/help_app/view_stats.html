@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View Stats</title>
+</head>
+<body>
+<h1>Hello, {{request.session.user_first}}. These are your stats </h1>
+<a href="/wishes">Dashboard | </a> 
+<a href="/log_out">Log out | </a> 
+
+<p>Total Granted Wishes So Far for All Users: {{all_jobs.count}}</p>
+
+<p>Your granted Wishes: {{my_jobs.count}}</p>
+</body>
+</html>

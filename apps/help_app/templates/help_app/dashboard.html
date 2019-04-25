@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'help_app/css/helper.css' %}">
+    <title>The Wishing App</title>
+</head>
+<body>
+    <div id='wrapper'>
+        <h1>Welcome, {{request.session.user_first}}</h1>
+        <a href="/log_out">Log out | </a> 
+        <a href="/add_wish">Make a Wish | </a>
+        <a href="/view_stats">View Stats</a> <br>
+
+        <h2>My Wishes</h2>
+
+            <table>
+                <tr>
+                    <th>Wish</th>
+                    <th>Date Added</th> 
+                    <th>Action</th>
+                </tr>
+                {% for jobs in all_jobs %}
+                {% if jobs.user.id == request.session.user_id %}
+                {% if not jobs.granted %}
+                <tr>
+                    <td>{{jobs.title}}</td>
+                    <td>{{jobs.created_at}}</td> 
+                    <td>
+                        
+                        &nbsp;<a href="/edit_wish/{{jobs.id}}">Edit | </a>
+                        &nbsp;<a href="/delete/{{jobs.id}}">Remove | </a>
+                        &nbsp;<a href="/add_to_my_job/{{jobs.id}}">Granted</a>
+                    </td>
+                        {%endif%}
+                </tr>
+                <!-- &nbsp;<a href="/view_job/{{jobs.id}}">View</a>&nbsp; -->
+                {% endif %}
+                {% endfor%}
+            </table>
+            <div>
+                    
+                <h2>Granted Wishes</h2>
+
+                <table>
+                    <tr>
+                        <th>Granted Wishes</th>
+                        <th>Wisher</th>
+                        <th>Date Added</th> 
+                        <th>Date Granted</th> 
+                        <th>Likes</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for j in all_jobs %}
+                    {% if j.granted  %}
+                    <tr>
+                        <td>{{j.title}}</td>
+                        <td>{{j.user.first_name}}</td>
+                        <td>{{j.created_at}}</td> 
+                        <td>{{j.updated_at}}</td>
+                        
+                        <td>
+                            <!-- &nbsp;<a href="/view_job/{{j.id}}">View</a>
+                            &nbsp;<a href="/delete/{{j.id}}">Done</a> -->
+                            {{j.like.count}}
+                            
+                        </td>
+                        <td>
+                            <a href="/like_job/{{j.id}}">like</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor%}
+                    
+                </table>
+
+                
+                
+
+                
+            </div>
+    </div>
+</body>
+</html>
